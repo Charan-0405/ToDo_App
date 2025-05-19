@@ -11,12 +11,13 @@ catch(error){
 }
 exports.addTodo=async (req,res)=>{
     try{
-    const title=req.body
+    const title=req.body.todo
+    console.log("added todo",title)
     const newTodo= new Todo({
-        title:title.todo
+        title:title
     })
     const savedTodo=await newTodo.save()
-    res.status(200).json({message:"todo received"})
+    res.status(200).json(savedTodo)
 }
 catch(error){
  res.status(500).json({message: "something went wrong, please try later"})

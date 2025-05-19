@@ -52,14 +52,15 @@ describe("When Todo Controller Is invoked", () =>{
          await todoController.addTodo(req,res);
             expect(mockSave).toHaveBeenCalled()
             expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.json).toHaveBeenCalledWith({message:"todo received"})
+            expect(res.json).toHaveBeenCalledWith(newTodo)
 
       })
 
 it("it should handle error if soemthing goes wrong", async()=>{
           const newTodo={title:"new todo"}
             const errorMessage = "something went wrong, please try later";
-          mockSave.mockRejectedValue(newTodo)
+           mockSave.mockRejectedValue(new Error(errorMessage))
+
          await todoController.addTodo(req,res);
             expect(mockSave).toHaveBeenCalled()
             expect(res.status).toHaveBeenCalledWith(500);

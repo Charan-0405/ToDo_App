@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "mongoose": "^8.14.2"
+    "mongoose": "^8.14.2",
+    "winston": "^3.17.0"
   }
 }
