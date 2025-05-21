@@ -11,8 +11,7 @@ catch(error){
 }
 exports.addTodo=async (req,res)=>{
     try{
-    const title=req.body.todo
-    console.log("added todo",title)
+    const title=req.body.title
     const newTodo= new Todo({
         title:title
     })
@@ -22,4 +21,17 @@ exports.addTodo=async (req,res)=>{
 catch(error){
  res.status(500).json({message: "something went wrong, please try later"})
 }
+
+}
+exports.deleteTodo= async(req,res)=>{
+    try{
+   const id=req.query.id
+   const respone=await Todo.findByIdAndDelete(id)
+   res.status(200).json({message:"successfully deleted a todo"})
+
+    }
+    catch(error){
+        console.log("getting error while deleting a todo",error)
+        res.status(500).json({message:"something went wrong in deleting a todo"})
+    }
 }
