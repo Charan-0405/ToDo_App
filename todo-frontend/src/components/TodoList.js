@@ -45,8 +45,7 @@ const deleteTodo=async (todo)=>{
         const response=await fetch(`${BACKEND_URL}/delete-todo?id=${id}`,{
             method:'DELETE'
         })
-        if (response.ok) {
-            // Remove deleted todo from local state
+        if (response.status==200) {
             setTodos(prev => prev.filter(todo => todo._id !== id));
         } else {
             console.error("Failed to delete todo on backend");

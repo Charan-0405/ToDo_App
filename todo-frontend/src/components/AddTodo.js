@@ -1,6 +1,6 @@
 import React ,{useState} from 'react'
 const AddTodo=({onAdd})=>{
-const [todo,setTodo]=useState("Add a task")
+const [todo,setTodo]=useState("")
    
 const handleSubmit= async (e)=>{
     e.preventDefault()
@@ -13,6 +13,7 @@ const handleSubmit= async (e)=>{
             <input
             type='text'
             value={todo}
+            placeholder='Add a New Todo'
             onChange={(e)=>setTodo(e.target.value)}
             />
             <button type="submit">Add Todo</button>
