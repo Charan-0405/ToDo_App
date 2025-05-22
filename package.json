@@ -2,5 +2,8 @@
   "dependencies": {
     "mongoose": "^8.14.2",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }
