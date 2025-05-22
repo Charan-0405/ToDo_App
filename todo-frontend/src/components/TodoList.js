@@ -30,6 +30,7 @@ const TodoList=()=>{
                 },
                 body:JSON.stringify({title})
             })
+            console.log(response)
             const newTodo=await response.json()
             setTodos((prev)=> [...prev,newTodo])
         }
@@ -45,7 +46,8 @@ const deleteTodo=async (todo)=>{
         const response=await fetch(`${BACKEND_URL}/delete-todo?id=${id}`,{
             method:'DELETE'
         })
-        if (response.status==200) {
+        console.log("response in delete",response)
+        if (response.status===200) {
             setTodos(prev => prev.filter(todo => todo._id !== id));
         } else {
             console.error("Failed to delete todo on backend");

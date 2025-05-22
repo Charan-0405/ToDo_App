@@ -12,6 +12,7 @@ catch(error){
 exports.addTodo=async (req,res)=>{
     try{
     const title=req.body.title
+    console.log(req.body)
     const newTodo= new Todo({
         title:title
     })
@@ -26,8 +27,8 @@ catch(error){
 exports.deleteTodo= async(req,res)=>{
     try{
    const id=req.query.id
-   const respone=await Todo.findByIdAndDelete(id)
-   res.status(200).json({message:"successfully deleted a todo"})
+   const response=await Todo.findByIdAndDelete(id)
+   res.status(200).json(response)
 
     }
     catch(error){

@@ -3,7 +3,9 @@ const todoController=require("../../controllers/todoControllers")
 jest.mock('../../models/todoModel.js')
 mockFind=jest.fn();
 mockSave=jest.fn();
+mockDelete=jest.fn();
 Todo.find = mockFind
+Todo.findByIdAndDelete=mockDelete
 Todo.mockImplementation(()=>({
     save: mockSave
 }))
@@ -68,8 +70,40 @@ it("it should handle error if soemthing goes wrong", async()=>{
 
       })
 
+      describe("for deleteTodo function",()=>{
+        it("If everything is  fine it should delete a todo",async()=>{
+            const deletedTodo={id:"1",title:"New Todo",completed:"false"}
+            mockDelete.mockResolvedValue(deletedTodo)
+            const req = {
+                query: {
+                id: "1" 
+                        }
+            };
+
+            await todoController.deleteTodo(req,res)
+            expect(mockDelete).toHaveBeenCalled()
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(deletedTodo)
+        })
+
+        it("it should handle error if soemthing goes wrong", async()=>{
+        const deletedTodo={id:"1",title:"New Todo",completed:"false"}
+        const errorMessage = "something went wrong in deleting a todo"
+           mockDelete.mockRejectedValue(new Error(errorMessage))
+            const req = {
+                query: {
+                id: "1" 
+                        }
+            };
+            await todoController.deleteTodo(req,res)
+            expect(mockSave).toHaveBeenCalled()
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.json).toHaveBeenCalledWith({message: errorMessage})
+
+      })
+
+      })
+
    })
-  
-  
   
   })

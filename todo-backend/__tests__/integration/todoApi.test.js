@@ -32,16 +32,36 @@ const mongoUri=mongoServer.getUri();
 
         describe("POST /api/add-todo", ()=>{
         it("should create a new todo", async () =>{
-            const response = await request(app).post("/api/add-todo").send({todo: "New Todo"})
+            const response = await request(app).post("/api/add-todo").send({title: "New Todo"})
             expect(response.status).toBe(200);
             expect(response.body.title).toBe("New Todo");
             expect(response.body.completed).toBe(false);
-
             const todo = await Todo.findById(response.body._id)
-            console.log("Response is ",todo);
             expect(todo).toBeTruthy();
             expect(todo.title).toBe("New Todo")
         })
+        
+    })
+
+    describe("DELETE /api/delete-todo",()=>{
+        it("should delete a todo",async()=>{
+        await Todo.create({title:"Todo 1"})
+        await Todo.create({title:"Todo 2"})
+          const todo=await Todo.findOne({title:"Todo 1"})
+          const deleteId=todo._id
+          const response=await request(app).delete("/api/delete-todo").query({id: todo._id.toString()})
+          expect(response.status).toBe(200)
+          expect(response.body.title).toBe("Todo 1");
+          expect(response.body.completed).toBe(false);
+
+        })
+           it("should return 400 if id is invalid format", async () => {
+      const response = await request(app)
+        .delete("/api/delete-todo")
+        .query({ id: "invalid-id" });
+      expect(response.status).toBe(500); // assuming backend validates ID format
+      expect(response.body.message).toBe("something went wrong in deleting a todo");
+    });
     })
 
 })
