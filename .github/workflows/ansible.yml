@@ -36,3 +36,16 @@ jobs:
 
             - name: "Debug SSH Key"
               run: ls -l ~/.ssh/ec2_key.pem
+              
+            - name: Run Ansible Playbook for deploying backend
+              run : |
+                ansible-playbook \
+                -i ansible/inventory \
+                -e "ec2_ssh_key_path=~/.ssh/ec2_key.pem" \
+                ansible/playbooks/provision_and_configure_server.yml 
+              env: 
+                AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY_ID:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                EC2_SSH_KEY_PATH: ~/.ssh/ec2_key.pem
+                ANSIBLE_HOST_KEY_CHECKING: False
+
