@@ -3,7 +3,5 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
   roles:
     - ec2_launch
