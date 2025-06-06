@@ -1,8 +1,9 @@
 ---
-- name: Provision Ec2 instance & install XX
+- name: Provision EC2 instance using Ansible
   hosts: localhost
+  connection: local
   gather_facts: no
   vars:
-    ansible_python_interpreter: /home/charan0405/.venvs/ansible-aws/bin/python3
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - ec2_launch
