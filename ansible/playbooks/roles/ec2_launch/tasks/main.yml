@@ -1,3 +1,35 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for ec2_instance
+- name: Adding SSH access to a security group
+  amazon.aws.ec2_group:
+    name: charan-security
+    description: security group for EC2 instances launched via ansible
+    region: ap-south-1
+    rules:
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      cidr_ip: 0.0.0.0/0  
+    - proto: tcp
+      to_port: 3000
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    rules_egress:
+    - proto: all
+      cidr_ip: 0.0.0.0/0
+  register: security_group
+
+- name: Launch EC2 instance
+  amazon.aws.ec2_instance:
+    name: Ansible-created-instance
+    key_name: {{ ec2_key_name }}
+    instance_type: {{ ec2_instance_type }}
+    region: {{ aws_region }}
+    image_id: {{ ec2_ami_id }}
+    count: 1
+    security_group: "{{ security_group.group_id }}"
+  register: ec2
