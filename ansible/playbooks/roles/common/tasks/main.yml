@@ -4,15 +4,16 @@
 - name: Install common packages
   package:
     name:
-     -httpd
+     - httpd
      - nodejs
      - npm
+
 - name: Start and enable Apache
   become: yes
   service:
-  name: httpd
-  state: started
-  enabled: yes
+    name: httpd
+    state: started
+    enabled: yes
 
 - name: Copy Source Code
   become: yes
