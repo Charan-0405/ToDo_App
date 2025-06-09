@@ -2,6 +2,7 @@
 ---
 # tasks file for common
 - name: Install common packages
+  become: yes
   package:
     name:
      - httpd
