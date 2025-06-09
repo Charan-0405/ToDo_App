@@ -11,7 +11,7 @@
   become: yes
   npm:
     name: pm2
-    globally: yes
+    global: yes
 
 - name: Check if start.js exits
   stat:
